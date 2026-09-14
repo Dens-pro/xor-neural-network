@@ -13,8 +13,8 @@ const xorData = [
 const perceptronResult = trainPerceptron(xorData, 100, 0.1);
 const mlpResult = trainMLP(xorData, 4, 5000, 0.5); 
 
-fs.mkdirSyn('src/models/weights', { recursive: true });
-fs.mkdirSyn('src/models/history', { recursive: true });
+fs.mkdirSync('src/models/weights', { recursive: true });
+fs.mkdirSync('src/models/history', { recursive: true });
 
 fs.writeFileSync(
     'src/models/weights/perceptron-weights.json',
@@ -23,7 +23,7 @@ fs.writeFileSync(
 
 fs.writeFileSync(
     'src/models/weights/mlp-weights.json',
-    JSON.stringify(mlpResultResult.weights, null, 2)
+    JSON.stringify(mlpResult.weights, null, 2)
 );
 
 fs.writeFileSync(
