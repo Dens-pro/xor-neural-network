@@ -97,7 +97,7 @@ function trainMLP(data, numHidden = 4, epochs = 5000, learningRate = 0.5){
     let weights = initWeights(numHidden);
     let history = []; 
 
-    for (let i = 0; i < data.length; i++){
+    for (let epoch = 0; epoch < epochs; epoch++){
         let totalLoss = 0; 
 
         for (let i = 0; i < data.lenght; i++){
