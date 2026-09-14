@@ -19,7 +19,7 @@ function mlpForward(X, Y, weights){
         hidden.push(sigmoid(z));
     }
 
-    let output = 0;
+    let zOut = 0;
     for (let i = 0; i < hidden.length; i++){
         zOut += hidden[i] * W2[i];
     }
