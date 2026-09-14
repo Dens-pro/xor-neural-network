@@ -1,122 +1,65 @@
-import { useState } from 'react'
-import heroImg from './assets/hero.png'
-import reactLogo from './assets/react.svg'
-import viteLogo from './assets/vite.svg'
-import './App.css'
+import { useState } from 'react';
+import { perceptronForward } from './models/perceptron.js';
+import { mlpForward } from './models/mlp.js';
+import perceptronWeights from './models/weights/perceptron-weights.json'; 
+import mlpWeights from './models/weights/mlp-weights.json';
+import mlpHistory from './models/history/mlp-history.json'; 
+import ModeToggle from './components/ModeToggle.jsx';
+import InputForm from './components/InputForm.jsx';
+import PredictionResult from './components/PredictionResult.jsx';
+import EpochsChart from './components/EpochsChart.jsx';
+import './App.css'; 
+
 
 function App() {
-  const [count, setCount] = useState(0)
+    const [mode, setMode] = useState("perceptron");
+    const [inputA, setInputA] = useState(0);
+    const [inputB, setInputB] = useState(0);
+    const [prediction, setPrediction] = useState(null);
+    const [theme, setTheme] = useState("light");
+    
+    function handleSubmit() {
+        let result; 
 
-  return (
-    <>
-      <section id="center">
-        <div className="hero">
-          <img src={heroImg} className="base" width="170" height="179" alt="" />
-          <img src={reactLogo} className="framework" alt="React logo" />
-          <img src={viteLogo} className="vite" alt="Vite logo" />
-        </div>
-        <div>
-          <h1>Get started</h1>
-          <p>
-            Edit <code>src/App.jsx</code> and save to test <code>HMR</code>
-          </p>
-        </div>
-        <button
-          type="button"
-          className="counter"
-          onClick={() => setCount((count) => count + 1)}
-        >
-          Count is {count}
-        </button>
-      </section>
+        if(mode === "perceptron") {
+            result = perceptronForward(
+                inputA, inputB,
+                perceptronWeights.w1, perceptronWeights.w2, perceptronWeights.b
+            );
+        } else {
+            const { output } = mlpForward(inputA, inputB, mlpWeights);
+            result = output >= 0.5 ? 1 : 0;
+        }
+        setPrediction(result);
+    }
 
-      <div className="ticks"></div>
+    function toggleTheme() {
+        setTheme(theme === "light" ? "dark": "light");
+    }
+    return (
+        <div className="app" data-theme={theme}>
+            <button className="theme-toggle" onClick={toggleTheme}>
+                {theme === "light" ? "🌙": "☀️"}
+            </button>
+            <h1>XOR Neural Network</h1>
+            <p className="instruction">Choisis A et B (0 ou 1), puis observe la prédiction</p>
 
-      <section id="next-steps">
-        <div id="docs">
-          <svg className="icon" role="presentation" aria-hidden="true">
-            <use href="/icons.svg#documentation-icon"></use>
-          </svg>
-          <h2>La meilleure Documentation</h2>
-          <p>Your questions, answered</p>
-          <ul>
-            <li>
-              <a href="https://vite.dev/" target="_blank">
-                <img className="logo" src={viteLogo} alt="" />
-                Explore Vite
-              </a>
-            </li>
-            <li>
-              <a href="https://react.dev/" target="_blank">
-                <img className="button-icon" src={reactLogo} alt="" />
-                Learn more
-              </a>
-            </li>
-          </ul>
-        </div>
-        <div id="social">
-          <svg className="icon" role="presentation" aria-hidden="true">
-            <use href="/icons.svg#social-icon"></use>
-          </svg>
-          <h2>Connect with us</h2>
-          <p>Join the Vite community</p>
-          <ul>
-            <li>
-              <a href="https://github.com/vitejs/vite" target="_blank">
-                <svg
-                  className="button-icon"
-                  role="presentation"
-                  aria-hidden="true"
-                >
-                  <use href="/icons.svg#github-icon"></use>
-                </svg>
-                GitHub
-              </a>
-            </li>
-            <li>
-              <a href="https://chat.vite.dev/" target="_blank">
-                <svg
-                  className="button-icon"
-                  role="presentation"
-                  aria-hidden="true"
-                >
-                  <use href="/icons.svg#discord-icon"></use>
-                </svg>
-                Discord
-              </a>
-            </li>
-            <li>
-              <a href="https://x.com/vite_js" target="_blank">
-                <svg
-                  className="button-icon"
-                  role="presentation"
-                  aria-hidden="true"
-                >
-                  <use href="/icons.svg#x-icon"></use>
-                </svg>
-                X.com
-              </a>
-            </li>
-            <li>
-              <a href="https://bsky.app/profile/vite.dev" target="_blank">
-                <svg
-                  className="button-icon"
-                  role="presentation"
-                  aria-hidden="true"
-                >
-                  <use href="/icons.svg#bluesky-icon"></use>
-                </svg>
-                Bluesky
-              </a>
-            </li>
-          </ul>
-        </div>
-      </section>
+            <ModeToggle mode={mode} setMode={setMode} /> 
 
-      <div className="ticks"></div>
-      <section id="spacer"></section>
-    </>
-  )
+            <InputForm
+                inputA={inputA}
+                inputB={inputB}
+                setInputA={setInputA}
+                setInputB={setInputB}
+                onSubmit={handleSubmit}
+                /> 
+
+            <PredictionResult prediction={prediction} inputA={inputA} inputB={inputB} /> 
+
+            {mode === "mlp" && <EpochsChart history={mlpHistory} />}
+        
+        </div>
+    );
 }
 
-export default App
+export default App;
