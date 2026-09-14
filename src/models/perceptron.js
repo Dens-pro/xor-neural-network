@@ -14,7 +14,7 @@ function perceptronForward(X, Y, w1, w2, b){
 }
 
 
-function trainPerceptron(data, epochs = 100, learning_rate = 0.1) {
+function trainPerceptron(data, epochs = 100, learningRate = 0.1) {
     
     // initializing the weights
     let w1 = Math.random() * 2 - 1;
@@ -35,8 +35,8 @@ function trainPerceptron(data, epochs = 100, learning_rate = 0.1) {
 
             // updating the weights
             w1 = w1 + learningRate * error * X; 
-            w2 = w2 + learning_rate * error * Y; 
-            b = b + learning_rate * error; 
+            w2 = w2 + learningRate * error * Y; 
+            b = b + learningRate * error; 
 
             totalError += Math.abs(error); 
         }
