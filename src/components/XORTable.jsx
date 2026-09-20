@@ -1,5 +1,4 @@
 import React from 'react';
-import './XORTable.css'; // On créera ou adaptera ce fichier CSS juste après si besoin
 
 export default function XORTable({ data, predict }) {
     return (
