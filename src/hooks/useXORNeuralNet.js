@@ -21,7 +21,7 @@ export function useXORNeuralNet() {
     // Inputs pour le test manuel
     const [inputA, setInputA] = useState(0);
     const [inputB, setInputB] = useState(0);
-    const [theme, setTheme] = useState("dark"); // Mode sombre par défaut pour le style IA
+    const [theme, setTheme] = useState("light"); // Mode clair par défaut
 
     const trainingRef = useRef(null);
 
@@ -52,15 +52,25 @@ export function useXORNeuralNet() {
                     totalLoss += res.loss;
                 }
 
-                setEpoch(e => e + 1);
-                setLossHistory(prev => [...prev.slice(-30), { epoch: epoch + 1, loss: totalLoss }]);
+                setEpoch(e => {
+                    const nextEpoch = e + 1;
+                    // Garder tout l'historique sans le couper pour voir le tracé complet
+                    setLossHistory(prev => [...prev, totalLoss]);
+                    
+                    // Condition d'arrêt automatique si le réseau a résolu le XOR (loss quasi-nulle)
+                    if (totalLoss < 0.01) {
+                        setIsTraining(false);
+                    }
+
+                    return nextEpoch;
+                });
 
                 return currentWeights;
             });
         }, 50);
 
         return () => clearInterval(trainingRef.current);
-    }, [isTraining, mode, learningRate, epoch]);
+    }, [isTraining, mode, learningRate]);
 
     const resetTraining = () => {
         setIsTraining(false);
