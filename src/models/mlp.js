@@ -1,11 +1,11 @@
 // The activation function of the mlp
 function sigmoid(z){
-    return 1 / (1 + Math.exp(-z))
+    return 1 / (1 + Math.exp(-z));
 }
 
 // Its derivative 
 function sigmoidDerivative(s){
-    return s * (1 - s)
+    return s * (1 - s);
 }
 
 // The forward function of the mlp 
@@ -14,8 +14,8 @@ function mlpForward(X, Y, weights){
 
     let hidden = []; 
     for (let i = 0; i < W1.length; i++){
-        let z = A * W1[i][0] + Y * W1[i][1] + b1[i];
         
+        let z = X * W1[i][0] + Y * W1[i][1] + b1[i];
         hidden.push(sigmoid(z));
     }
 
@@ -30,13 +30,13 @@ function mlpForward(X, Y, weights){
 }
 
 function outputDelta(output, target){
-    let dLossDOutput = 2 * (output - target)
+    let dLossDOutput = 2 * (output - target);
     let dOutputDzOut = sigmoidDerivative(output);
     return dLossDOutput * dOutputDzOut; 
 }
 
 function hiddenDeltas(deltaOut, W2, hidden){
-    let deltaHidden = []
+    let deltaHidden = [];
     for (let i = 0; i < hidden.length; i++){
         let d = deltaOut * W2[i] * sigmoidDerivative(hidden[i]); 
         deltaHidden.push(d); 
@@ -48,18 +48,20 @@ function hiddenDeltas(deltaOut, W2, hidden){
 function backprop(X, Y, target, weights, learningRate){
     let { W1, b1, W2, b2 } = weights; 
 
-    const { hidden, output } = mlpForward; 
+    
+    const { hidden, output } = mlpForward(X, Y, weights); 
 
     const deltaOut = outputDelta(output, target); 
     const deltaHidden = hiddenDeltas(deltaOut, W2, hidden);
 
-    for (let i = 0; i < W2.lenght; i++){
+    
+    for (let i = 0; i < W2.length; i++){
         let gradientW2 = deltaOut * hidden[i]; 
         W2[i] = W2[i] - learningRate * gradientW2; 
     }
     b2 = b2 - learningRate * deltaOut; 
     
-    for (let i = 0; i < W1.lenght; i++){
+    for (let i = 0; i < W1.length; i++){
         let gradientW1_0 = deltaHidden[i] * X; 
         W1[i][0] = W1[i][0] - learningRate * gradientW1_0; 
 
@@ -100,18 +102,19 @@ function trainMLP(data, numHidden = 4, epochs = 5000, learningRate = 0.5){
     for (let epoch = 0; epoch < epochs; epoch++){
         let totalLoss = 0; 
 
-        for (let i = 0; i < data.lenght; i++){
-        const { X, Y, target } = data[i];
+        
+        for (let i = 0; i < data.length; i++){
+            const { X, Y, target } = data[i];
             const result = backprop(X, Y, target, weights, learningRate);
-            weights = {W1: result.W1, b1: result.b1, W2: result.W2, b2: result.b2}; 
+            weights = { W1: result.W1, b1: result.b1, W2: result.W2, b2: result.b2 }; 
             totalLoss += result.loss; 
         }
         if (epoch % 500 === 0){
             history.push({ epoch, loss: totalLoss });
         }
     }
-return { weights, history };
+    return { weights, history };
 }
 
 //export of all the function in this file 
-export { sigmoid, sigmoidDerivative, mlpForward, backprop, trainMLP, initWeights}; 
+export { sigmoid, sigmoidDerivative, mlpForward, backprop, trainMLP, initWeights };
