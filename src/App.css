@@ -6,17 +6,11 @@
     --muted: #8A8AA3;
 }
 
-[data-theme="dark"] {
-    --bg: #14141F;
-    --surface: #1E1E2E;
-    --text: #ECECF4;
-    --accent: #7C7FFF;
-    --muted: #6C6C85;
-}
 
 * {
     box-sizing: border-box; 
 }
+
 
 body {
     margin: 0;
@@ -25,12 +19,23 @@ body {
     font-family: system-ui, sans-serif;
 }
 
+[data-theme="dark"] {
+    --bg: #14141F;
+    --surface: #1E1E2E;
+    --text: #ECECF4;
+    --accent: #7C7FFF;
+    --muted: #6C6C85;
+}
+
 .app {
     max-width: 420px;
     margin: 0 auto;
     padding: 24px 16px;
     text-align: center;
     position: relative;
+    background: var(--bg);
+    color: var(--text);
+    min-height: 100vh;
 }
 
 .theme-toggle {
