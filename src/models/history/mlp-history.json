@@ -1,0 +1,42 @@
+[
+  {
+    "epoch": 0,
+    "loss": 0
+  },
+  {
+    "epoch": 500,
+    "loss": 0
+  },
+  {
+    "epoch": 1000,
+    "loss": 0
+  },
+  {
+    "epoch": 1500,
+    "loss": 0
+  },
+  {
+    "epoch": 2000,
+    "loss": 0
+  },
+  {
+    "epoch": 2500,
+    "loss": 0
+  },
+  {
+    "epoch": 3000,
+    "loss": 0
+  },
+  {
+    "epoch": 3500,
+    "loss": 0
+  },
+  {
+    "epoch": 4000,
+    "loss": 0
+  },
+  {
+    "epoch": 4500,
+    "loss": 0
+  }
+]
