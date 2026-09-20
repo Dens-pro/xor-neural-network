@@ -21,8 +21,8 @@ function EpochsChart({ history }){
         <div className="epochs-chat">
             <svg width={width} height={height} viewBox={`0 0 ${width} ${height}`}>
             <polyline points={points} fill="none" stroke="var(--accent)" strokeWidth="2" /> 
-                <text x={padding} y={height - 2} fontSize="10" fill="var(--muted)">0</text>
-                <text x={width - padding - 20} y={height - 2} fontSize="10" fill="var(--muted)">{maxEpoch}</text>
+            <text x={padding} y={height - 2} fontSize="10" fill="var(--muted)">0</text>
+            <text x={width - padding - 20} y={height - 2} fontSize="10" fill="var(--muted)">{maxEpoch}</text>
             </svg>
         </div>
     ); 
