@@ -5,7 +5,10 @@
 > Ce projet permet de basculer entre les deux modèles et voir concrètement cette différence.
 
 ### Apperçu
-![Capture d'écran de l'app](./docs/screenshot.png)
+## 🎨 Aperçu Visuel de l'Interface
+Voici un aperçu de la frontière de décision et de la courbe de loss en action :
+
+![Graphiques XOR Dashboard](./assets/graph-preview.png)
 
 ## Stack technique 
 - React
