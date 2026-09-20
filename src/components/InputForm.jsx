@@ -1,27 +1,43 @@
+import React from 'react';
 
-function BinaryToggle({ label, value, onChange }){
+export default function InputForm({ inputA, inputB, setInputA, setInputB }) {
     return (
-        <div className="binary-toggle">
-        <span className="binaryToggle-label">{label}</span>
-            <button
-                onClick={() => onChange(value === 0 ? 1 : 0)}
-                >
-                {value}
-            </button>
+        <div className="input-form-container">
+            <label className="input-group">
+                <span>Entrée A :</span>
+                <div className="toggle-buttons">
+                    <button 
+                        className={`btn-val ${inputA === 0 ? 'active' : ''}`}
+                        onClick={() => setInputA(0)}
+                    >
+                        0
+                    </button>
+                    <button 
+                        className={`btn-val ${inputA === 1 ? 'active' : ''}`}
+                        onClick={() => setInputA(1)}
+                    >
+                        1
+                    </button>
+                </div>
+            </label>
+
+            <label className="input-group">
+                <span>Entrée B :</span>
+                <div className="toggle-buttons">
+                    <button 
+                        className={`btn-val ${inputB === 0 ? 'active' : ''}`}
+                        onClick={() => setInputB(0)}
+                    >
+                        0
+                    </button>
+                    <button 
+                        className={`btn-val ${inputB === 1 ? 'active' : ''}`}
+                        onClick={() => setInputB(1)}
+                    >
+                        1
+                    </button>
+                </div>
+            </label>
         </div>
     );
 }
-
-
-function InputForm({ inputA, inputB, setInputA, setInputB, onSubmit }){
-    return (
-        <div className="input-form">
-            <BinaryToggle label="A" value={inputA} onChange={setInputA} /> 
-            <BinaryToggle label="B" value={inputB} onChange={setInputB} /> 
-            <button>Prediction
-            </button>
-        </div>
-    );
-}
-
-export default InputForm;
